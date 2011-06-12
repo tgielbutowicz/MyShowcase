@@ -8,12 +8,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      sign_in @user
       flash[:success] = "Welcome to the MyShowcase!"
       flash[:info] = "Feel free to comment."
       redirect_to @user
     else
       @title = "Sign up"
-      @user.password = "" #reset password on singup failure
+      @user.password = "" #reset password on singup failure, just for safety
       @user.password_confirmation = ""
       render 'new'
     end

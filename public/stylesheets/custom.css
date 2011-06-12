@@ -147,12 +147,8 @@ div.field, div.actions {
 
 /* Error messages */
 
-.field_with_errors label {
-  color: red;
-}
-
 .field_with_errors input {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 
 #error_explanation {
