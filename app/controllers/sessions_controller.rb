@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
   def new
     @title = "Sign in"
+    if signed_in?
+      flash[:info] = "You arledy been registered and signed in."
+      redirect_to root_path
+    end
   end
   
   def create
@@ -12,7 +16,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       sign_in user
-      redirect_to user
+      redirect_back_or user
     end
   end
 

@@ -1,27 +1,89 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only => [:index, :edit, :update]
+  before_filter :correct_user, :only => [:edit, :update]
+  before_filter :admin_user,   :only => :destroy
 
+  def index
+    @title = "All users"
+    @users = User.paginate(:page => params[:page])
+  end
+  
   def show
     @user = User.find(params[:id])
     @title = @user.name
   end
 
   def create
-    @user = User.new(params[:user])
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the MyShowcase!"
-      flash[:info] = "Feel free to comment."
-      redirect_to @user
+    if signed_in?
+      flash[:info] = "You arledy been registered and sign in. No need to make a new account."
+      redirect_to root_path
     else
-      @title = "Sign up"
-      @user.password = "" #reset password on singup failure, just for safety
-      @user.password_confirmation = ""
-      render 'new'
+      @user = User.new(params[:user])
+      if @user.save
+        sign_in @user
+        flash[:success] = "Welcome to the MyShowcase!"
+        redirect_to @user
+      else
+        @title = "Sign up"
+        @user.password = "" #reset password on singup failure, just for safety
+        @user.password_confirmation = ""
+        render 'new'
+      end
     end
   end
   
   def new
-    @user = User.new
-    @title = "Sign up"
+    @title = "Sign up" 
+    if signed_in?
+      flash[:info] = "You arledy been registered and sign in. No need to make a new account."
+      redirect_to root_path
+    else
+      @user = User.new
+    end
   end
+  
+  def edit
+    @title = "Edit user"
+  end
+  
+  def update
+    if @user.update_attributes(params[:user])
+      flash[:success] = "Profile updated."
+      redirect_to @user
+    else
+      @title = "Edit user"
+      render 'edit'
+    end
+  end
+  
+  def destroy
+    #User.find(params[:id]).destroy
+    @user = User.find(params[:id])
+    if current_user?(@user)
+      flash[:error] = "You can't delete your account."
+      redirect_to users_path
+    else
+      @user.destroy
+      flash[:success] = "User destroyed."
+      redirect_to users_path
+    end
+    #flash[:success] = "User destroyed."
+    #redirect_to users_path
+  end
+  
+  private
+
+    def authenticate
+      deny_access unless signed_in?
+    end
+    
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless current_user?(@user)
+    end
+    
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+    
 end
