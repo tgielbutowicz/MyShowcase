@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110612231713) do
+ActiveRecord::Schema.define(:version => 20110613181957) do
+
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "views"
+    t.integer  "likes"
+    t.integer  "dislikes"
+    t.integer  "user_id"
+    t.integer  "resource_id"
+    t.integer  "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
