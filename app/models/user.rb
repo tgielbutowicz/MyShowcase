@@ -18,6 +18,13 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   
   has_many :posts, :dependent => :destroy
+  has_many :users_relations, :foreign_key => "follower_id",
+                           :dependent => :destroy
+  has_many :following, :through => :users_relations, :source => :followed
+  has_many :reverse_users_relations, :foreign_key => "followed_id",
+                                   :class_name => "UsersRelation",
+                                   :dependent => :destroy
+  has_many :followers, :through => :reverse_users_relations, :source => :follower
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -52,6 +59,18 @@ class User < ActiveRecord::Base
   def feed
     # This is preliminary. See Chapter 12 for the full implementation.
     Post.where("user_id = ?", id)
+  end
+  
+  def following?(followed)
+    users_relations.find_by_followed_id(followed)
+  end
+
+  def follow!(followed)
+    users_relations.create!(:followed_id => followed.id)
+  end
+  
+  def unfollow!(followed)
+    users_relations.find_by_followed_id(followed).destroy
   end
   
   private

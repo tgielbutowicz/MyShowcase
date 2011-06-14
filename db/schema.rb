@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613181957) do
+ActiveRecord::Schema.define(:version => 20110614203220) do
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -38,5 +38,14 @@ ActiveRecord::Schema.define(:version => 20110613181957) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "users_relations", :force => true do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+  end
+
+  add_index "users_relations", ["followed_id"], :name => "index_users_relations_on_followed_id"
+  add_index "users_relations", ["follower_id", "followed_id"], :name => "index_users_relations_on_follower_id_and_followed_id", :unique => true
+  add_index "users_relations", ["follower_id"], :name => "index_users_relations_on_follower_id"
 
 end

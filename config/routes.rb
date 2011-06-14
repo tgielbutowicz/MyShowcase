@@ -1,10 +1,14 @@
 MyShowcase::Application.routes.draw do
   get "sessions/new"
 
-  #get "users/new"
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, :only => [:new, :create, :destroy]
   resources :posts, :only => [:index, :create, :destroy]
+  resources :users_relations, :only => [:create, :destroy]
   
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
