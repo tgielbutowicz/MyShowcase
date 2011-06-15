@@ -5,10 +5,12 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
+<% if current_user?(@user) %>
         <div class="post round">
         <h3>Add new post.</h3>
-        <%= render 'shared/post_form' %>
+<%= render 'shared/post_form' %>
         </div>
+<% end %>
       <%= render 'follow_form' if signed_in? %>
       <% unless @user.posts.empty? %>
         <table class="posts" summary="User posts">

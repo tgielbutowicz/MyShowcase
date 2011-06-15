@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20110615015401) do
     t.string "name"
   end
 
-  add_index "tags", ["name"], :name => "index_tags_on_name"
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "tags_relations", :force => true do |t|
     t.integer "post_id"

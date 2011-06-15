@@ -1,5 +1,5 @@
 <% unless @feed_items.empty? %>
-  <table class="posts" summary="User posts">
+  <table class="posts" summary="Requied posts">
     <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
   </table>
   <%= will_paginate @feed_items %>

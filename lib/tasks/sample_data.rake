@@ -10,7 +10,7 @@ namespace :db do
 end
 
 def make_users
-  admin = User.create!(:name => "Admin Idzik",
+  admin = User.create!(:name => "Admin",
                        :email => "admin@railstutorial.org",
                        :password => "foobar",
                        :password_confirmation => "foobar")
@@ -46,8 +46,9 @@ end
 
 def make_tags
   posts = Post.all[1..100]
-  20.times do
-    tag = Tag.create!(:name => Faker::Lorem.words(1))
+  words = Faker::Lorem.words(20).uniq
+  words.each do |i|
+    tag = Tag.create!(:name => "#{i}")
     20.times do
       posts.shuffle.first.describe!(tag)
     end

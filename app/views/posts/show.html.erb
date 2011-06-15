@@ -1,0 +1,25 @@
+<table class="full_post" summary="Post view">
+  <tr>
+    <td>
+      <h1>
+        <%= @post.title %>
+      </h1>
+    </td>
+    <td>
+     .
+    </td>
+<tr><td><%= @post.content %></td><td></td></tr>
+  <tr class="sidebar round">
+   <td>
+    <span class="timestamp">
+      Posted <%= time_ago_in_words(@post.created_at) %> ago, by <%= link_to @post.user.name, @post.user %>.
+    </span>
+  </td>
+  <td>
+    <%= link_to "x", @post, :method => :delete,
+                                     :confirm => "You sure?",
+                                     :title => @post.title,
+:class => "delete" %>
+  </td>
+</tr>
+</table>

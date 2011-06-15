@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
   def home
-    @title = "Home"
+    @title = "Gallery"
     if signed_in?
       @tags = Tag.all
-      @feed_items = current_user.feed.paginate(:page => params[:page])
+      @feed_items = Post.all.paginate(:page => params[:page])
     end
   end
   

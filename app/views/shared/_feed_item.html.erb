@@ -12,12 +12,4 @@
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
     </span>
   </td>
-  <% if current_user?(feed_item.user) %>
-  <td>
-    <%= link_to "x", feed_item, :method => :delete,
-                                     :confirm => "You sure?",
-                                     :title => feed_item.content,
-:class => "delete" %>
-  </td>
-  <% end %>
 </tr>
