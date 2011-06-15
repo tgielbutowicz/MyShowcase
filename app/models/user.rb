@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
                                    :class_name => "UsersRelation",
                                    :dependent => :destroy
   has_many :followers, :through => :reverse_users_relations, :source => :follower
+  
+  scope :admin, where(:admin => true) #User.admin would return an array of all the site admins.
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -57,8 +59,7 @@ class User < ActiveRecord::Base
   end
   
   def feed
-    # This is preliminary. See Chapter 12 for the full implementation.
-    Post.where("user_id = ?", id)
+    Post.from_users_followed_by(self)
   end
   
   def following?(followed)
