@@ -20,6 +20,9 @@ class Post < ActiveRecord::Base
   attr_accessible :title, :content
   
   belongs_to :user
+  belongs_to :resource, :polymorphic => true
+  has_many :tags_relations, :dependent => :destroy
+  has_many :tags, :through => :tags_relations
   
   validates :title, :presence => true, :length => { :within => 1..48 }
   validates :content, :presence => true
@@ -30,6 +33,15 @@ class Post < ActiveRecord::Base
   # Return posts from the users being followed by the given user.
   scope :from_users_followed_by, lambda { |user| followed_by(user) }
 
+  def describe!(tag)
+    tags_relations.create!(:tag_id => tag.id) 
+  end
+  
+  def undescribe!(tag)
+    tags_relations.find_by_tag_id(tag).destroy
+  end
+
+  
   private
 
     # Return an SQL condition for users followed by the given user.

@@ -9,14 +9,18 @@ MyShowcase::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   resources :posts, :only => [:index, :create, :destroy]
   resources :users_relations, :only => [:create, :destroy]
+  resources :tags_relations
+  resources :tags
   
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
   
+  match '/channel', :to => 'pages#channel'
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+  
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "pages#home"

@@ -4,7 +4,8 @@ namespace :db do
     Rake::Task['db:reset'].invoke
     make_users
     make_posts
-    make_relationships
+    make_user_relations
+    make_tags
   end
 end
 
@@ -34,11 +35,21 @@ def make_posts
   end
 end
 
-def make_relationships
+def make_user_relations
   users = User.all
   user  = users.first
   following = users[1..50]
   followers = users[3..40]
   following.each { |followed| user.follow!(followed) }
   followers.each { |follower| follower.follow!(user) }
+end
+
+def make_tags
+  posts = Post.all[1..100]
+  20.times do
+    tag = Tag.create!(:name => Faker::Lorem.words(1))
+    20.times do
+      posts.shuffle.first.describe!(tag)
+    end
+  end
 end

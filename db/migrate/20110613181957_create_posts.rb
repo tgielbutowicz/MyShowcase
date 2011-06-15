@@ -4,9 +4,9 @@ class CreatePosts < ActiveRecord::Migration
       #shared columns
       t.string :title
       t.text :content
-      t.integer :views
-      t.integer :likes
-      t.integer :dislikes
+      t.integer :views, :default => 0
+      t.integer :likes, :default => 0
+      t.integer :dislikes, :default => 0
       t.integer :user_id
       
       #polymorphic associations

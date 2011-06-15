@@ -2,7 +2,14 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @post = Post.new
+      @tags = Tag.all
+      @feed_items = current_user.feed.paginate(:page => params[:page])
+    end
+  end
+  
+  def channel
+    @title = "Your channel"
+    if signed_in?
       @feed_items = current_user.feed.paginate(:page => params[:page])
     end
   end

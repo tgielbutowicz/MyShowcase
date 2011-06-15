@@ -1,0 +1,5 @@
+<h3>Tags Cloud</h3>
+
+<% @tags.each do |tag| %>
+  <div class=<%= "tag-#{tag.id}" %>><%= link_to tag.name, tag %> - <%= tag.tags_relations.count %></div>
+<% end %>

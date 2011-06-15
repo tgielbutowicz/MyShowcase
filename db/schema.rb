@@ -10,14 +10,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614203220) do
+ActiveRecord::Schema.define(:version => 20110615015401) do
+
+  create_table "lyrics", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "content"
-    t.integer  "views"
-    t.integer  "likes"
-    t.integer  "dislikes"
+    t.integer  "views",         :default => 0
+    t.integer  "likes",         :default => 0
+    t.integer  "dislikes",      :default => 0
     t.integer  "user_id"
     t.integer  "resource_id"
     t.integer  "resource_type"
@@ -26,6 +39,20 @@ ActiveRecord::Schema.define(:version => 20110614203220) do
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
+
+  create_table "tags_relations", :force => true do |t|
+    t.integer "post_id"
+    t.integer "tag_id"
+  end
+
+  add_index "tags_relations", ["post_id"], :name => "index_tags_relations_on_post_id"
+  add_index "tags_relations", ["tag_id"], :name => "index_tags_relations_on_tag_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

@@ -1,9 +1,5 @@
-.container {
-  width: 710px;
-}
-
 body {
-  background: #cff;
+  background: #000033;
 }
 
 header {
@@ -20,6 +16,21 @@ section {
   font-size: 120%;
   padding: 20px;
   background: #fff;
+}
+
+a.delete {
+  -moz-border-radius:    6px;
+  -webkit-border-radius: 6px;
+  border-radius:         6px;
+  width: 14px;
+	float: right;
+	padding: 3px;
+
+  text-align: center;
+  color: white;
+  background: #6299C5;
+  font-weight: bold;
+
 }
 
 section h1 {
@@ -106,7 +117,7 @@ a.signup_button {
 footer {
   text-align: center;
   margin-top: 10px;
-  width: 710px;
+
   margin-left: auto;
   margin-right: auto;
 }
@@ -128,7 +139,7 @@ td.main {
 }
 
 td.sidebar {
-  width: 30%;
+  width: 20%;
   padding: 1em;
   vertical-align: top;
   background: #ffc;
@@ -192,8 +203,10 @@ ul.users {
 
 /* posts */
 
-h1.post {
-  margin-bottom: 0.3em;
+div.post {
+  background: #ffc;
+  padding: 10px;
+  margin-top: 2em;
 }
 
 table.posts {
