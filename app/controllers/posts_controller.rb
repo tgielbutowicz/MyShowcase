@@ -2,8 +2,9 @@ class PostsController < ApplicationController
   before_filter :authenticate, :only => [:create, :destroy]
   before_filter :authorized_user, :only => :destroy
 
-  def show 
+  def show
     @post = Post.find(params[:id])
+    @title = @post.title
   end
   
   def create
@@ -30,6 +31,12 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     redirect_back_or current_user
+  end
+  
+  def update
+    @post = Post.find(params[:id])
+    @post.likeit!
+    redirect_to @post
   end
   
   private

@@ -40,7 +40,10 @@ class Post < ActiveRecord::Base
   def undescribe!(tag)
     tags_relations.find_by_tag_id(tag).destroy
   end
-
+  
+  def likeit!
+    self.increment!(:likes)
+  end
   
   private
 

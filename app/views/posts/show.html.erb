@@ -13,6 +13,7 @@
    <td>
     <span class="timestamp">
       Posted <%= time_ago_in_words(@post.created_at) %> ago, by <%= link_to @post.user.name, @post.user %>.
+      <%= @post.likes %> people likes it.
     </span>
   </td>
   <td>
@@ -22,5 +23,5 @@
 :class => "delete" %>
   </td>
 </tr>
-<tr><td><%= link_to @post.likes %> likes it.</td></tr>
+<tr><td><%= link_to "Like it!", @post, :method => :put %> people like it.</td></tr>
 </table>

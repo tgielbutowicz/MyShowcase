@@ -7,7 +7,7 @@ MyShowcase::Application.routes.draw do
     end
   end
   resources :sessions, :only => [:new, :create, :destroy]
-  resources :posts, :only => [:show, :index, :create, :destroy]
+  resources :posts, :only => [:show, :index, :create, :destroy, :update]
   resources :users_relations, :only => [:create, :destroy]
   resources :tags_relations
   resources :tags
